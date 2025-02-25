@@ -3,29 +3,50 @@ public class ExtractSubClass {
 // todo: extract subclass PartsItem & LaborItem from JobItem
 	class JobItem {
 	  private int quantity;
-	  private int unitPrice;
-	  private Employee employee;
-	  private boolean isLabor;
 
-	  public JobItem(int quantity, int unitPrice, boolean isLabor, Employee employee) {
+
+	  public JobItem(int quantity) {
 		this.quantity = quantity;
-		this.unitPrice = unitPrice;
-		this.isLabor = isLabor;
-		this.employee = employee;
 	  }
-	  public int getTotalPrice() {
-		return quantity * getUnitPrice();
-	  }
+
 	  public int getQuantity() {
 		return quantity;
 	  }
-	  public int getUnitPrice() {
-		return (isLabor) ? employee.getRate() : unitPrice;
-	  }
-	  public Employee getEmployee() {
-		return employee;
-	  }
+	public abstract int getUnitPrice();
+
+		        public int getTotalPrice() {
+            return quantity * getUnitPrice();
+        }
 	}
+	class PartsItem extends JobItem {
+		private int unitPrice;
+		public PartsItem(int quantity, int unitPrice){
+			super(quantity);
+			this.unitPrice = unitPrice;
+		}
+		public setUnitPrice(int unitPrice) {
+			this.unitPrice = unitPrice;
+		}
+		getUnitPrice(){
+			return unitPrice;
+		}
+		
+	}
+    class LaborItem extends JobItem {
+        private Employee employee;
+
+        public LaborItem(int quantity, Employee employee) {
+            super(quantity);
+            this.employee = employee;
+        }
+        public int getUnitPrice() {
+            return employee.getRate();
+        }
+        public Employee getEmployee() {
+            return employee;
+        }
+    }
+		
 
 	class Employee {
 	  private int rate;
@@ -46,4 +67,5 @@ public class ExtractSubClass {
 	public static void main(String[] args) {
 		new ExtractSubClass().action();
 	}
+
 }

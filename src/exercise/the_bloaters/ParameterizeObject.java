@@ -17,12 +17,12 @@ public class ParameterizeObject {
 			  transactions.add(new Transaction(1300, new Date(1300)));
 		  }
 
-		  public double getFlowBetween(Date start, Date end) {
+		  public double getFlowBetween(Daterange dateRange) {
 		    double result = 0;
 		    Enumeration e = transactions.elements();
 		    while (e.hasMoreElements()) {
 		      Transaction each = (Transaction) e.nextElement();
-		      if (each.getDate().compareTo(start) >= 0 && each.getDate().compareTo(end) <= 0) {
+		      if (dateRange.includes(each.getDate())) {
 		        result += each.getValue();
 		      }
 		    }
